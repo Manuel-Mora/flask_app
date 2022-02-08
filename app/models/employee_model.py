@@ -21,6 +21,8 @@ class Employee(db.Model):
         super().__init__()
         self.__tablename__ = "employee"
 
-    def get_all(self):
+    def get_all(self, params=None):
         """Get all employees that are not deleted"""
-        return self.query.filter_by(deleted_at=None).all()
+        query = self.query.filter_by(deleted_at=None, **params)
+        print(query)
+        return query.all()
