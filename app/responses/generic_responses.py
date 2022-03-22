@@ -57,3 +57,14 @@ class Responses():
             "data": data
         }
         return json.dumps(response, ensure_ascii=False)
+
+    @staticmethod
+    def logical_delete(data):
+        """Response for logical delete of a resource"""
+        response = {
+            "statusCode": 200,
+            "status": "Deleted",
+            "text": "Resource has been successfully deleted",
+            "data": data
+        }
+        return json.dumps(response, ensure_ascii=False)

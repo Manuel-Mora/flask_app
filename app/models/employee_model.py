@@ -41,7 +41,7 @@ class Employee(db.Model):
 
     def update(self, emp_id, params):
         """Update the employee data in DB"""
-        employee = self.get_one_by({"id": emp_id})
+        employee = self.get_one_by({"id": emp_id, "deleted_at": None})
         if employee:
             for param, value in params.items():
                 setattr(employee, param, value)

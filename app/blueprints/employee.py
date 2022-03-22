@@ -1,6 +1,7 @@
 """Employees module"""
 import json
 from flask import Blueprint, request
+from datetime import datetime
 from app.models.employee_model import Employee
 from app.schemas.employee_schema import EmployeeSchema
 from app.responses.generic_responses import Responses
@@ -48,4 +49,14 @@ def update(employee_id):
     if updated_emp:
         employee = EmployeeSchema(many=False).dump(updated_emp)
         return Responses.update_response(employee)
+    return Responses.not_found_response({"id": employee_id})
+
+@employee_bp.delete("/<employee_id>")
+def logic_delete(employee_id):
+    """Make a logical delete of an employee"""
+    deleted_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    employee = Employee().update(employee_id, {"deleted_at": deleted_at})
+    if employee:
+        employee = EmployeeSchema(many=False).dump(employee)
+        return Responses.logical_delete(employee)
     return Responses.not_found_response({"id": employee_id})
