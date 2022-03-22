@@ -60,3 +60,11 @@ def logic_delete(employee_id):
         employee = EmployeeSchema(many=False).dump(employee)
         return Responses.logical_delete(employee)
     return Responses.not_found_response({"id": employee_id})
+
+@employee_bp.delete("/<employee_id>/destroy")
+def destroy(employee_id):
+    """Make a permanent delete of an employee"""
+    response = Employee().destroy(employee_id)
+    if response:
+        return Responses.destroy_resource()
+    return Responses.not_found_response({"id": employee_id})

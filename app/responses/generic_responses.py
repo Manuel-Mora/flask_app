@@ -68,3 +68,14 @@ class Responses():
             "data": data
         }
         return json.dumps(response, ensure_ascii=False)
+
+    @staticmethod
+    def destroy_resource():
+        """Response for a resource destroy"""
+        response = {
+            "statusCode": 204,
+            "status": "Destroyed",
+            "text": "Resource has been permanently deleted",
+            "data": None
+        }
+        return json.dumps(response, ensure_ascii=False)

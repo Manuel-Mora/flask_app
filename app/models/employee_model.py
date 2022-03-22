@@ -48,3 +48,12 @@ class Employee(db.Model):
             db.session.commit()
             return self.get_one_by({"id": emp_id})
         return None
+
+    def destroy(self, emp_id):
+        """Destroy an employee in  DB"""
+        employee = self.get_one_by({"id": emp_id})
+        if employee:
+            db.session.delete(employee)
+            db.session.commit()
+            return True
+        return False
