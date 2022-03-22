@@ -29,3 +29,12 @@ class Employee(db.Model):
         """Create a new employee in DB"""
         db.session.add(self)
         db.session.commit()
+
+    def toggle_status(self, params):
+        """Change an employee status by the given id"""
+        employee = self.get_one_by(params)
+        if employee:
+            employee.is_active = int(not bool(employee.is_active))
+            db.session.commit()
+            return self.get_one_by(params)
+        return None

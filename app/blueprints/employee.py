@@ -30,3 +30,12 @@ def create():
     employee.create()
     new_emp = EmployeeSchema(many=False).dump(employee.get_one_by(params))
     return Responses.create_response(new_emp)
+
+@employee_bp.patch("/<employee_id>")
+def toggle_active(employee_id):
+    """Change the actual status of an employee"""
+    employee = Employee().toggle_status({"id": employee_id})
+    if employee:
+        employee = EmployeeSchema(many=False).dump(employee)
+        return Responses.update_response(employee)
+    return Responses.not_found_response({"id": employee_id})

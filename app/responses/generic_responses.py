@@ -35,3 +35,25 @@ class Responses():
             "data": data
         }
         return json.dumps(response, ensure_ascii=False)
+
+    @staticmethod
+    def update_response(data):
+        """Response for update operation"""
+        response = {
+            "statusCode": 201,
+            "status": "Updated",
+            "text": "Success update of resource",
+            "data": data
+        }
+        return json.dumps(response, ensure_ascii=False)
+
+    @staticmethod
+    def not_found_response(data):
+        """Error response for not found resource"""
+        response = {
+            "statusCode": 404,
+            "status": "Not Found",
+            "text": "No resource found according to the given data",
+            "data": data
+        }
+        return json.dumps(response, ensure_ascii=False)
