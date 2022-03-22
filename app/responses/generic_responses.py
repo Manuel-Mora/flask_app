@@ -24,3 +24,14 @@ class Responses():
             "data": data
         }
         return json.dumps(response, ensure_ascii=False)
+
+    @staticmethod
+    def show_response(data):
+        """Response for show operation"""
+        response = {
+            "statusCode": 200,
+            "status": "Success",
+            "text": "Success show of resource",
+            "data": data
+        }
+        return json.dumps(response, ensure_ascii=False)
