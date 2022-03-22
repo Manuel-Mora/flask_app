@@ -17,10 +17,15 @@ class Employee(db.Model):
     is_active = db.Column(db.Integer, nullable=False)
     deleted_at = db.Column(db.DateTime, nullable=True)
 
-    def __init__(self):
-        super().__init__()
-        self.__tablename__ = "employee"
-
     def get_all(self, params=None):
         """Get all employees that are not deleted"""
         return self.query.filter_by(deleted_at=None, **params).all()
+
+    def get_one_by(self, params):
+        """Get the first resource by the given params"""
+        return self.query.filter_by(**params).first()
+
+    def create(self):
+        """Create a new employee in DB"""
+        db.session.add(self)
+        db.session.commit()

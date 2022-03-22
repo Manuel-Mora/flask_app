@@ -1,4 +1,5 @@
 """Employees module"""
+import json
 from flask import Blueprint, request
 from app.models.employee_model import Employee
 from app.schemas.employee_schema import EmployeeSchema
@@ -13,3 +14,12 @@ def index():
     employee_list = Employee().get_all(params)
     employees = EmployeeSchema(many=True).dump(employee_list)
     return Responses.index_response(employees)
+
+@employee_bp.post("")
+def create():
+    """Create a new employee"""
+    params = json.loads(request.data)
+    employee = Employee(**params)
+    employee.create()
+    new_emp = EmployeeSchema(many=False).dump(employee.get_one_by(params))
+    return Responses.create_response(new_emp)
