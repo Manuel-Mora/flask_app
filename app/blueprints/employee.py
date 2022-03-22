@@ -39,3 +39,13 @@ def toggle_active(employee_id):
         employee = EmployeeSchema(many=False).dump(employee)
         return Responses.update_response(employee)
     return Responses.not_found_response({"id": employee_id})
+
+@employee_bp.put("/<employee_id>")
+def update(employee_id):
+    """Update the employee according to the given id"""
+    body = json.loads(request.data)
+    updated_emp = Employee().update(employee_id, body)
+    if updated_emp:
+        employee = EmployeeSchema(many=False).dump(updated_emp)
+        return Responses.update_response(employee)
+    return Responses.not_found_response({"id": employee_id})

@@ -36,5 +36,15 @@ class Employee(db.Model):
         if employee:
             employee.is_active = int(not bool(employee.is_active))
             db.session.commit()
-            return self.get_one_by(params)
+            return employee
+        return None
+
+    def update(self, emp_id, params):
+        """Update the employee data in DB"""
+        employee = self.get_one_by({"id": emp_id})
+        if employee:
+            for param, value in params.items():
+                setattr(employee, param, value)
+            db.session.commit()
+            return self.get_one_by({"id": emp_id})
         return None
